@@ -1,0 +1,401 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>WORKSOUT HQ Restaurants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F5F6F3; --surface:#FFFFFF; --ink:#16181A; --muted:#62675F; --line:#E1E3DD;
+  --accent:#1F4FD1; --accent-soft:#E4EAFB; --star:#B07800; --star-soft:#FBF1DA;
+  --naver:#03A94D; --warn:#A5520B; --warn-soft:#FBEBDC;
+  --ring:#C9CDC4; --dot:#1F4FD1;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#111312; --surface:#1A1D1B; --ink:#ECEEEA; --muted:#9AA096; --line:#2C302D;
+    --accent:#86A2FF; --accent-soft:#1F2A4A; --star:#F0B429; --star-soft:#3A2F12;
+    --naver:#3DD68C; --warn:#F2A35E; --warn-soft:#3A2614;
+    --ring:#3A3F3B; --dot:#86A2FF;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#111312; --surface:#1A1D1B; --ink:#ECEEEA; --muted:#9AA096; --line:#2C302D;
+  --accent:#86A2FF; --accent-soft:#1F2A4A; --star:#F0B429; --star-soft:#3A2F12;
+  --naver:#3DD68C; --warn:#F2A35E; --warn-soft:#3A2614;
+  --ring:#3A3F3B; --dot:#86A2FF;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:28px}
+header{display:grid;gap:14px}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+h1{font-size:clamp(26px,4vw,36px);line-height:1.2;margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+.lede{margin:0;color:var(--muted);max-width:68ch}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:4px}
+.stat{display:grid}
+.stat b{font-family:var(--mono);font-size:24px;font-weight:500;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+
+.register{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.register h2{font-size:15px;margin:0}
+.register form{display:flex;flex-wrap:wrap;gap:8px}
+.register input{flex:1 1 220px;min-width:0}
+.hint{font-size:12.5px;color:var(--muted);margin:0}
+.msg{font-size:13px;margin:0;min-height:1.2em}
+.msg.err{color:var(--warn)}
+.msg.ok{color:var(--naver)}
+.queue{display:flex;flex-wrap:wrap;gap:6px}
+.results{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.results:empty{display:none}
+.res{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.res:first-child{border-top:0}
+.res b{font-size:14.5px}
+.res .sub{font-size:12.5px;color:var(--muted);grid-column:1}
+.res .sub .sc{color:var(--star);font-family:var(--mono)}
+.res .act{grid-row:1 / span 2;grid-column:2}
+.res.fallback{background:var(--bg)}
+.btn.sm{font-size:13px;padding:5px 12px}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.done{font-size:12.5px;color:var(--naver);white-space:nowrap}
+.qitem{display:inline-flex;align-items:center;gap:6px;font-size:13px;border:1px dashed var(--line);border-radius:999px;padding:3px 4px 3px 12px}
+.qitem.nf{border-style:solid;border-color:var(--warn);color:var(--warn)}
+.qitem em{font-style:normal;font-size:11.5px;color:var(--muted)}
+.qitem.nf em{color:var(--warn)}
+
+.main{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.main{grid-template-columns:minmax(0,1fr)}}
+.mapbox{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:10px}
+@media (max-width:900px){.mapbox{position:static}}
+.mapbox h2{font-size:14px;margin:0;font-weight:500}
+.mapbox svg{width:100%;height:clamp(360px,58vh,620px);display:block}
+.maplegend{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px}
+.dot{fill:var(--dot);stroke:var(--surface);stroke-width:3;cursor:pointer}
+.dot.hot{fill:var(--star)}
+.lbl{font-family:var(--sans);font-size:14px;font-weight:500;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round;cursor:pointer}
+.lbl .sc{fill:var(--star);font-family:var(--mono);font-size:12.5px}
+.lbl.hot{font-weight:700;fill:var(--star)}
+.ring{fill:none;stroke:var(--ring);stroke-width:1.5}
+.ring.dash{stroke-dasharray:6 6}
+.ringlabel{font-family:var(--sans);font-size:12.5px;fill:var(--muted);paint-order:stroke;stroke:var(--surface);stroke-width:4px}
+.hq{fill:var(--ink)}
+.hqlabel{font-family:var(--sans);font-size:14px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:5px}
+.compass{font-family:var(--mono);font-size:12px;fill:var(--muted)}
+
+.panel{display:grid;gap:16px;min-width:0}
+.filters{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flabel{font-size:12px;color:var(--muted);width:48px;flex:none}
+button{font:inherit;cursor:pointer}
+.chip{font-size:13.5px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:5px 12px;display:inline-flex;gap:6px;align-items:center}
+.chip small{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip[aria-pressed="true"] small{color:var(--bg);opacity:.75}
+.btn{font-size:14px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:8px;padding:7px 16px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.x{border:0;background:transparent;color:var(--muted);font-size:12px;padding:2px 8px;border-radius:999px}
+.x:hover{color:var(--warn);background:var(--warn-soft)}
+.x.confirm{color:var(--warn);background:var(--warn-soft);font-weight:500}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select,input[type="search"],input[type="text"]{font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+input[type="search"]{flex:1 1 180px;min-width:0}
+
+.count{font-size:13px;color:var(--muted)}
+.list{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:14px 16px;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item.hot{background:var(--accent-soft)}
+.name{font-weight:700;font-size:16px;color:var(--ink);text-decoration:none}
+.name:hover{color:var(--accent);text-decoration:underline}
+.orig{font-size:12px;color:var(--muted);font-weight:400;margin-left:6px}
+.flag{font-size:11.5px;color:var(--warn);background:var(--warn-soft);border-radius:4px;padding:1px 6px;margin-left:6px;white-space:nowrap}
+.meta{font-size:13px;color:var(--muted);grid-column:1}
+.meta .g{color:var(--ink);font-weight:500}
+.right{grid-row:1 / span 2;grid-column:2;display:grid;justify-items:end;align-content:start;gap:4px;text-align:right}
+.rating{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:14px;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.rating.top{background:var(--star-soft);color:var(--star)}
+.rating.none{font-family:var(--sans);font-size:12px;color:var(--muted)}
+.reviews{font-size:12px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.walk{font-size:13px;white-space:nowrap}
+.walk b{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums}
+.walk .near{color:var(--accent)}
+.foot{font-size:12.5px;color:var(--muted);grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.foot .open{color:var(--naver)}
+.foot .x{margin-left:auto}
+.memo{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13.5px}
+.memo-text{background:var(--star-soft);color:var(--ink);border-radius:6px;padding:3px 10px;max-width:100%;overflow-wrap:anywhere}
+.memo-add{border:1px dashed var(--line);background:transparent;color:var(--muted);font-size:12.5px;border-radius:6px;padding:2px 10px}
+.memo-add:hover{color:var(--ink);border-color:var(--muted)}
+.memo.edit input{flex:1 1 220px;min-width:0}
+.empty{padding:28px 16px;color:var(--muted);text-align:center}
+footer{font-size:12.5px;color:var(--muted);max-width:80ch;display:grid;gap:4px}
+footer p{margin:0}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">웍스아웃 본사 · 서울 마포구 월드컵북로23길 24</div>
+    <h1>WORKSOUT HQ Restaurants</h1>
+    <p class="lede">하루 네 번(오전 9시, 12시, 오후 3시, 6시) 자동으로 갱신돼요. 도보 시간은 본사에서 잰 직선거리로 계산한 추정치예요. <span id="upd"></span></p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="main">
+    <aside class="mapbox" aria-label="본사 기준 위치">
+      <h2>본사 기준 위치 <span class="count">(위쪽이 북쪽 · 목록 필터와 함께 바뀌어요)</span></h2>
+      <svg id="map" role="img" aria-label="본사를 중심으로 한 등록 가게 위치 지도"></svg>
+      <div class="maplegend"><span>원: 도보 5분 · 10분 · 15분</span><span>점이나 이름을 누르면 목록에서 찾아가요</span></div>
+    </aside>
+
+    <section class="panel">
+      <div class="filters">
+        <div class="frow" id="cats" role="group" aria-label="종류"></div>
+        <div class="frow" id="walks" role="group" aria-label="도보 시간"></div>
+        <div class="frow">
+          <span class="flabel">정렬</span>
+          <select id="sort" aria-label="정렬">
+            <option value="rating">평점 높은 순</option>
+            <option value="dist">가까운 순</option>
+            <option value="count">리뷰 많은 순</option>
+            <option value="new">최근 등록 순</option>
+          </select>
+          <input type="search" id="q" placeholder="가게 이름, 메뉴, 메모 검색" aria-label="검색">
+        </div>
+      </div>
+      <div class="count" id="count"></div>
+      <ul class="list" id="list"><li class="empty">등록된 가게를 불러오는 중이에요…</li></ul>
+    </section>
+  </div>
+
+  <footer>
+    <p>보기 전용 페이지예요. 가게 등록과 수정은 관리자만 할 수 있어요.</p>
+    <p>출처: 네이버 플레이스. 평점은 방문자 리뷰 평점이고, 가게가 평점을 숨긴 경우 "평점 비공개"로 표시돼요. 방문 전에 가게 이름을 눌러 네이버 지도에서 영업 여부를 확인하세요.</p>
+    <p>도보 시간 = 직선거리 × 1.3(골목 우회 보정) ÷ 분당 80m. 실제 경로는 신호등이나 길 모양에 따라 다를 수 있어요.</p>
+  </footer>
+</div>
+
+<script>
+const GROUPS = ["한식","일식","양식","중식","아시아","분식","치킨·버거","술집","카페·디저트","기타"];
+const WALKS = [["all","전체"],["w5","5분 이내"],["w10","5~10분"],["w15","10~15분"],["w99","15분 이상"]];
+const inWalk = (w, k) => k==="all" || (k==="w5" ? w<=5 : k==="w10" ? w>5&&w<=10 : k==="w15" ? w>10&&w<=15 : w>15);
+const state = {g:"all", w:"all", sort:"rating", q:""};
+try{ Object.assign(state, JSON.parse(localStorage.getItem("wo-lunch2")||"{}")); state.q=""; }catch(e){}
+if (!WALKS.some(([v]) => v===state.w)) state.w = "all";
+const save = () => { try{ localStorage.setItem("wo-lunch2", JSON.stringify({g:state.g,w:state.w,sort:state.sort})); }catch(e){} };
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s||"").replace(/[\s()\-·.,]/g,"").toLowerCase();
+
+let stores = [];      // [{doc, name, status, addedAt, naver}]
+let col = null;       // db collection ref
+let pendingDelete = null;
+
+// ---------- derived views ----------
+const ready = () => stores.filter(s => s.status==="ok" && s.naver);
+const waiting = () => stores.filter(s => s.status!=="ok" || !s.naver);
+
+function renderStats(){
+  const r = ready(), n = k => r.filter(s => inWalk(s.naver.walk, k)).length;
+  const scored = r.filter(s => s.naver.score);
+  const avg = scored.length ? (scored.reduce((a,s)=>a+s.naver.score,0)/scored.length).toFixed(2) : "–";
+  $("stats").innerHTML = [[r.length+"곳","등록 완료"],[n("w5")+"곳","도보 5분 이내"],[n("w10")+"곳","5~10분"],[n("w15")+"곳","10~15분"],[avg,"평균 평점"]]
+    .map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
+}
+
+function renderQueue(){
+  const w = waiting();
+  $("queue").innerHTML = w.map(s => {
+    const nf = s.status==="notfound";
+    return `<span class="qitem ${nf?"nf":""}">${esc(s.name)} <em>${nf?"네이버에서 못 찾음":"정보 가져오기 대기 중"}</em>${delBtn(s.doc)}</span>`;
+  }).join("");
+}
+
+function delBtn(doc){ return ""; }
+
+function renderFilters(){
+  const r = ready(), counts = {};
+  r.forEach(s => counts[s.naver.g]=(counts[s.naver.g]||0)+1);
+  if (state.g!=="all" && !counts[state.g]) state.g = "all";
+  const cats = [["all","전체",r.length], ...GROUPS.filter(g=>counts[g]).map(g=>[g,g,counts[g]])];
+  $("cats").innerHTML = `<span class="flabel">종류</span>` + cats.map(([v,l,n]) =>
+    `<button class="chip" data-g="${v}" aria-pressed="${state.g===v}">${l}<small>${n}</small></button>`).join("");
+  $("walks").innerHTML = `<span class="flabel">도보</span>` + WALKS.map(([v,l]) =>
+    `<button class="chip" data-w="${v}" aria-pressed="${state.w===v}">${l}</button>`).join("");
+}
+
+function filtered(){
+  const q = state.q.toLowerCase();
+  const r = ready().filter(s =>
+    (state.g==="all" || s.naver.g===state.g) && inWalk(s.naver.walk, state.w) &&
+    (!q || (s.name+" "+s.naver.name+" "+s.naver.category+" "+(s.memo||"")).toLowerCase().includes(q)));
+  const by = {
+    rating:(a,b)=>(b.naver.score||0)-(a.naver.score||0)||b.naver.visitorReviews-a.naver.visitorReviews,
+    dist:(a,b)=>a.naver.dist-b.naver.dist,
+    count:(a,b)=>(b.naver.visitorReviews+b.naver.blogReviews)-(a.naver.visitorReviews+a.naver.blogReviews),
+    new:(a,b)=>String(b.addedAt).localeCompare(String(a.addedAt)),
+  }[state.sort];
+  return r.sort(by);
+}
+
+function renderList(){
+  const rows = filtered();
+  $("count").textContent = ready().length ? `${rows.length}곳 표시 중` : "";
+  if (!stores.length){
+    $("list").innerHTML = `<li class="empty">아직 등록된 가게가 없어요. 위에서 가게 이름을 등록해 보세요.</li>`;
+  } else if (!ready().length){
+    $("list").innerHTML = `<li class="empty">등록한 가게의 네이버 정보를 아직 가져오지 않았어요.</li>`;
+  } else if (!rows.length){
+    $("list").innerHTML = `<li class="empty">조건에 맞는 곳이 없어요. 필터를 줄여 보세요.</li>`;
+  } else {
+    $("list").innerHTML = rows.map(s => { const n = s.naver; return `
+    <li class="item" id="p-${esc(s.doc)}" data-doc="${esc(s.doc)}">
+      <div><a class="name" href="https://map.naver.com/p/entry/place/${esc(n.id)}" target="_blank" rel="noopener">${esc(n.name)}</a>${
+        n.nameMatch ? "" : `<span class="flag">등록한 이름과 달라요 · "${esc(s.name)}"</span>`}</div>
+      <div class="meta"><span class="g">${esc(n.g)}</span> · ${esc(n.category)}</div>
+      <div class="right">
+        ${n.score ? `<span class="rating ${n.score>=4.5?"top":""}">★ ${n.score.toFixed(2)}</span>` : `<span class="rating none">평점 비공개</span>`}
+        <span class="reviews">방문자 ${n.visitorReviews.toLocaleString()} · 블로그 ${n.blogReviews.toLocaleString()}</span>
+        <span class="walk">${dir(n.e, n.n)} · <b class="${n.walk<=5?"near":""}">약 ${Math.max(1,Math.round(n.walk))}분</b> · ${n.dist}m</span>
+      </div>
+      ${memoRow(s)}
+      <div class="foot">${esc(n.addr)}${n.hours?` · <span class="open">${esc(n.hours)}</span>`:""}${delBtn(s.doc)}</div>
+    </li>`; }).join("");
+  }
+  lastRows = rows; drawMap();
+  if (editing){
+    const inp = $("memo-in");
+    if (inp){ inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); }
+  }
+}
+
+// ---------- one-line memo ----------
+let editing = null; // {doc, draft}
+function memoRow(s){
+  return s.memo ? `<div class="memo"><span class="memo-text">${esc(s.memo)}</span></div>` : "";
+}
+async function saveMemo(doc){
+  const s = stores.find(x => x.doc===doc); if (!s || !col) return;
+  const memo = (editing ? editing.draft : "").trim().slice(0, 80);
+  editing = null;
+  if (memo === (s.memo||"")){ renderList(); return; }
+  try { await col.doc(doc).update({memo, memoAt:new Date().toISOString()}); }
+  catch(err){ msg("메모를 저장하지 못했어요. 이 페이지에 Contributor 이상 권한이 있는지 확인해 주세요.", "err"); renderList(); }
+}
+
+function renderAll(){ renderStats(); renderFilters(); renderList(); }
+
+// ---------- map: drawn in real screen pixels so text and dots stay readable ----------
+const RINGS = [[5, 5*80/1.3], [10, 10*80/1.3], [15, 15*80/1.3]];
+let lastRows = [];
+function drawMap(){
+  const svg = $("map"), rows = lastRows;
+  const W = svg.clientWidth || 600, H = svg.clientHeight || 480;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const cx = W/2, cy = H/2;
+  // zoom to the shown stores (at least the 5-minute ring)
+  const far = Math.max(RINGS[0][1] * 1.15, ...rows.map(s => s.naver.dist * 1.08));
+  const sc = (Math.min(W, H)/2 - 22) / far;
+  const P = s => [cx + s.naver.e * sc, cy - s.naver.n * sc];
+
+  let out = "";
+  RINGS.forEach(([min, r], i) => {
+    const rp = r * sc; if (rp > Math.hypot(W, H)/2) return;
+    out += `<circle class="ring ${i<2?"dash":""}" cx="${cx}" cy="${cy}" r="${rp}"></circle>`;
+    const a = -Math.PI/4, lx = cx + rp*Math.cos(a), ly = cy + rp*Math.sin(a);
+    if (lx < W-30 && ly > 14) out += `<text class="ringlabel" x="${lx+4}" y="${ly-4}">${min}분</text>`;
+  });
+  out += `<text class="compass" x="${cx}" y="14" text-anchor="middle">N ↑</text>`;
+
+  // labels: right of the dot (left near the right edge), nudged apart vertically
+  const pts = rows.map(s => { const [x,y] = P(s); return {s, x, y}; }).sort((a,b) => a.y-b.y);
+  const placed = [];
+  pts.forEach(p => {
+    const text = p.s.naver.name, w = [...text].length * 13.5 + (p.s.naver.score ? 44 : 0);
+    const left = p.x + 12 + w > W - 4;
+    let ly = p.y + 5;
+    const x0 = left ? p.x - 12 - w : p.x + 12, x1 = x0 + w;
+    for (const q of placed) if (x0 < q.x1 && x1 > q.x0 && Math.abs(ly - q.y) < 17) ly = q.y + 17;
+    placed.push({x0, x1, y: ly});
+    p.lx = left ? p.x - 12 : p.x + 12; p.ly = ly; p.anchor = left ? "end" : "start";
+  });
+  out += pts.map(p => `<circle class="dot" data-doc="${esc(p.s.doc)}" cx="${p.x}" cy="${p.y}" r="7"><title>${esc(p.s.naver.name)}</title></circle>`).join("");
+  out += pts.map(p => `<text class="lbl" data-doc="${esc(p.s.doc)}" x="${p.lx}" y="${p.ly}" text-anchor="${p.anchor}">${esc(p.s.naver.name)}${
+    p.s.naver.score ? ` <tspan class="sc">★${p.s.naver.score.toFixed(1)}</tspan>` : ""}</text>`).join("");
+  out += `<rect class="hq" x="${cx-8}" y="${cy-8}" width="16" height="16" rx="2"></rect>
+    <text class="hqlabel" x="${cx}" y="${cy+26}" text-anchor="middle">본사</text>`;
+  if (!rows.length) out += `<text class="ringlabel" x="${cx}" y="${cy+50}" text-anchor="middle">표시할 가게가 없어요</text>`;
+  svg.innerHTML = out;
+}
+if (window.ResizeObserver) new ResizeObserver(() => drawMap()).observe($("map"));
+
+function hot(doc){
+  document.querySelectorAll(".hot").forEach(el=>el.classList.remove("hot"));
+  const li=$("p-"+doc); if(li) li.classList.add("hot");
+  document.querySelectorAll(`#map [data-doc="${CSS.escape(doc)}"]`).forEach(el => { el.classList.add("hot"); el.parentNode.appendChild(el); });
+}
+
+// 8-way compass direction from HQ (e = metres east, n = metres north)
+function dir(e, n){
+  const names = ["북쪽","북동쪽","동쪽","남동쪽","남쪽","남서쪽","서쪽","북서쪽"];
+  const deg = (Math.atan2(e, n) * 180 / Math.PI + 360) % 360;
+  return names[Math.round(deg / 45) % 8];
+}
+
+// ---------- events ----------
+document.addEventListener("click", async e => {
+  const g = e.target.closest("[data-g]"); if (g){ state.g=g.dataset.g; save(); renderFilters(); renderList(); return; }
+  const w = e.target.closest("[data-w]"); if (w){ state.w=w.dataset.w; save(); renderFilters(); renderList(); return; }
+  const d = e.target.closest("[data-del]");
+  if (d){
+    const doc = d.dataset.del;
+    if (!d.dataset.confirm){ pendingDelete = doc; renderQueue(); renderList(); return; }
+    pendingDelete = null;
+    try { await col.doc(doc).delete(); msg("삭제했어요.", "ok"); }
+    catch(err){ msg("삭제하지 못했어요. 이 페이지를 편집할 권한이 있는지 확인해 주세요.", "err"); }
+    return;
+  }
+  const me = e.target.closest("[data-memo]");
+  if (me){
+    const s = stores.find(x => x.doc===me.dataset.memo);
+    editing = {doc: me.dataset.memo, draft: (s && s.memo) || ""}; renderList(); return;
+  }
+  if (e.target.closest("[data-memocancel]")){ editing = null; renderList(); return; }
+  const m = e.target.closest("#map [data-doc]");
+  if (m){
+    const li = $("p-"+m.dataset.doc); if(!li) return;
+    li.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"center"});
+    hot(m.dataset.doc);
+  }
+});
+$("list").addEventListener("mouseover", e => { const li=e.target.closest(".item"); if(li) hot(li.dataset.doc); });
+$("list").addEventListener("input", e => { if (e.target.id==="memo-in" && editing) editing.draft = e.target.value; });
+$("list").addEventListener("keydown", e => { if (e.target.id==="memo-in" && e.key==="Escape"){ editing = null; renderList(); } });
+$("list").addEventListener("submit", e => {
+  const f = e.target.closest("[data-memoform]"); if (!f) return;
+  e.preventDefault(); saveMemo(f.dataset.memoform);
+});
+$("sort").value = state.sort;
+$("sort").addEventListener("change", e => { state.sort=e.target.value; save(); renderList(); });
+$("q").addEventListener("input", e => { state.q=e.target.value.trim(); renderList(); });
+
+function msg(t, cls){ $("regMsg").textContent = t; $("regMsg").className = "msg " + (cls||""); }
+
+// ---------- data: stores.json, refreshed by a scheduled sync ----------
+$("list").innerHTML = `<li class="empty">가게 목록을 불러오는 중이에요…</li>`;
+fetch("stores.json?t=" + Date.now(), {cache:"no-store"})
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(d => {
+    stores = d.stores || [];
+    if (d.updatedAt){
+      const t = new Date(d.updatedAt);
+      $("upd").textContent = "마지막 갱신: " + t.toLocaleString("ko-KR", {timeZone:"Asia/Seoul", month:"long", day:"numeric", hour:"numeric", minute:"2-digit"});
+    }
+    renderAll();
+  })
+  .catch(() => { $("list").innerHTML = `<li class="empty">가게 목록을 불러오지 못했어요. 새로고침해 주세요.</li>`; });
+</script>
+
+</body></html>
